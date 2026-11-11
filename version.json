@@ -1,0 +1,17 @@
+{
+  "version": "1.0.0",
+  "build": "2026-11-11T14:57:43.085Z",
+  "revision": "58052fe66b9b",
+  "note": "首版上线：perf 与 valgrind 两门交互课程，支持自动检查更新",
+  "courses": [
+    "perf",
+    "valgrind"
+  ],
+  "history": [
+    {
+      "build": "2026-11-11T14:57:43.085Z",
+      "note": "首版上线：perf 与 valgrind 两门交互课程，支持自动检查更新",
+      "revision": "58052fe66b9b"
+    }
+  ]
+}

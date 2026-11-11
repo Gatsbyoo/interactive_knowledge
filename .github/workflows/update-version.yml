@@ -1,0 +1,44 @@
+name: Refresh site revision
+
+# 课程数据变更 push 到 main 后，自动重算 version.json 的内容指纹。
+# 网页端据此提示访客「有新版本」。指纹没变时不会产生任何提交。
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'assets/**'
+      - 'data/**'
+      - 'version.json'
+      - 'scripts/bump-version.js'
+
+jobs:
+  bump:
+    # 本工作流自己的提交带这个标记，避免无限循环
+    if: ${{ !contains(github.event.head_commit.message, '[skip-revision]') }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Recompute content revision
+        env:
+          COMMIT_NOTE: ${{ github.event.head_commit.message }}
+        run: node scripts/bump-version.js
+
+      - name: Commit version.json when changed
+        run: |
+          if git diff --quiet -- version.json; then
+            echo "revision unchanged, nothing to commit"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add version.json
+          git commit -m "chore: refresh site revision [skip-revision]"
+          git push

@@ -1,1 +1,103 @@
-hello
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab · 系统工具训练场 | perf &amp; Valgrind 交互课</title>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body data-theme="light">
+
+  <header class="topbar">
+    <div class="brand" id="brandHome" role="button" tabindex="0">
+      <span class="brand-mark">Lab</span>
+      <span class="brand-text">
+        <b>系统工具训练场</b>
+        <small>给 C++ 工程师的交互式实操课</small>
+      </span>
+    </div>
+
+    <nav class="tool-tabs" id="toolTabs" aria-label="切换工具"></nav>
+
+    <div class="top-actions">
+      <button class="icon-btn" id="btnSearch" title="全局命令速查">
+        <span class="ico">⌕</span><span class="btn-label">命令速查</span>
+      </button>
+      <button class="icon-btn" id="btnExtend" title="如何添加新工具">
+        <span class="ico">＋</span><span class="btn-label">扩展指南</span>
+      </button>
+      <button class="icon-btn" id="btnCheckUpdate" title="检查是否有新版本">
+        <span class="ico">⟳</span><span class="btn-label">检查更新</span><i class="update-dot" hidden></i>
+      </button>
+      <button class="icon-btn" id="btnTheme" title="切换明暗主题">
+        <span class="ico" id="themeIco">◐</span>
+      </button>
+      <div class="progress-wrap" id="progressWrap" title="本章节完成进度"></div>
+    </div>
+  </header>
+
+  <!-- 发现新版本时的非阻塞提示条 -->
+  <div class="update-banner" id="updateBanner" hidden>
+    <span class="ub-ico">⟳</span>
+    <div class="ub-text">
+      <b>课程有新版本 <span id="ubVersion"></span></b>
+      <small id="ubNote"></small>
+      <em>学习进度存在浏览器本地，刷新不会丢失。</em>
+    </div>
+    <div class="ub-actions">
+      <button class="btn" id="ubRefresh">刷新获取新内容</button>
+      <button class="btn ghost" id="ubLater">稍后提醒</button>
+      <button class="ub-close" id="ubClose" title="关闭">✕</button>
+    </div>
+  </div>
+
+  <div class="shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="side-head">
+        <div class="side-tool-name" id="sideToolName"></div>
+        <div class="side-meta" id="sideMeta"></div>
+        <div class="side-progress"><div class="bar"><i id="sideBar"></i></div><span id="sidePct">0%</span></div>
+      </div>
+      <nav class="chapter-nav" id="chapterNav" aria-label="课程章节"></nav>
+      <div class="side-foot">
+        <div class="hint-title">怎么用这个网页</div>
+        <p>代码块和命令可点「复制」；模拟终端能真的敲命令；带下划线的输出行可以点开看解读；进度保存在本机浏览器里。</p>
+        <div class="ver-line" id="verLine">版本信息载入中…</div>
+      </div>
+    </aside>
+
+    <main class="content" id="content"></main>
+  </div>
+
+  <!-- 全局命令速查抽屉 -->
+  <div class="overlay" id="overlay" hidden></div>
+  <section class="drawer" id="drawerSearch" aria-label="全局命令速查" hidden>
+    <div class="drawer-head">
+      <div><h2>全局命令速查</h2><p>跨工具搜索所有命令，点一行即复制</p></div>
+      <button class="close-btn" data-close="1">✕</button>
+    </div>
+    <div class="drawer-tools">
+      <input type="search" id="globalSearch" placeholder="搜索命令、用途、参数…… 例如 cache / leak / record / CI" autocomplete="off">
+      <span class="count" id="searchCount"></span>
+    </div>
+    <div class="drawer-body" id="searchResults"></div>
+  </section>
+
+  <!-- 扩展指南抽屉 -->
+  <section class="drawer" id="drawerExtend" aria-label="扩展指南" hidden>
+    <div class="drawer-head">
+      <div><h2>扩展指南 · 加第三个工具</h2><p>这套网页是数据驱动的：加工具不用改界面代码</p></div>
+      <button class="close-btn" data-close="1">✕</button>
+    </div>
+    <div class="drawer-body" id="extendBody"></div>
+  </section>
+
+  <div class="toast" id="toast" hidden></div>
+
+  <script src="data/core.js"></script>
+  <script src="data/perf.js"></script>
+  <script src="data/valgrind.js"></script>
+  <script src="assets/app.js"></script>
+  <script src="assets/update.js"></script>
+</body>
+</html>
